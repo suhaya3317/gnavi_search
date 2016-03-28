@@ -1,0 +1,36 @@
+<% if @rests.present? %>
+  <% @rests.each_with_index do |rest, index| %>
+    <%== '<div class="row">' if index % 3 == 0 %>
+    <div class="col-sm-4">
+      <div class="card">
+        <%= image_tag(rest[:image_url][:shop_image1].presence || '/files/images/noimage.png', { class: 'card-img-top center-block' }) %>
+        <div class="card-block">
+          <h4 class="card-title"><%= rest[:name] %></h4>
+          <p class="card-text"><%== rest[:pr][:pr_short].presence %></p>
+          <p>
+            アクセス<br>
+            <%== "路線名： " + rest[:access][:line]+ "<br>" if rest[:access][:line].present? %>
+            <%== "駅名: " + rest[:access][:station] + "<br>" if rest[:access][:station].present? %>
+            <%== "駅出口: " + rest[:access][:station_exit] + "<br>" if rest[:access][:station_exit].present? %>
+            <%== rest[:access][:walk] + "分" + "<br>" if rest[:access][:walk].present? %>
+            <%== "備考: " + rest[:access][:note] + "<br>" if rest[:access][:note].present? %>
+          </p>
+          <%= link_to('詳細をみる', detail_path(id: rest[:id]), { class: 'btn btn-primary' }) %>
+        </div>
+      </div>
+    </div>
+    <%== '</div>' if (index % 3 == 2 || index + 1 == @rests.count) %>
+  <% end %>
+  <div class="row" style="text-align: center; margin: 30px;">
+  <% if @offset_page > 1 %>
+    <%= form_tag(list_path, method: :post) do  %>
+      <%= hidden_field(nil, :prev, { value: true }) %>
+      <%= submit_tag '戻る', { class: 'btn btn-primary' } %>
+    <% end %>
+  <% end %>
+  <%= form_tag(list_path, method: :post) do  %>
+    <%= hidden_field(nil, :next, { value: true }) %>
+    <%= submit_tag '次へ', { class: 'btn btn-primary' } %>
+  <% end %>
+  </div>
+<% end %>

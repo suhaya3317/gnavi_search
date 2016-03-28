@@ -1,0 +1,7 @@
+<div style="text-align: center; ">
+<h1><%= @rest[:name] %></h1>
+<%= image_tag(@rest[:image_url][:shop_image1].presence || '/files/images/noimage.png') %>
+<p>住所: <%= @rest[:address] %></p>
+<p>電話番号: <%= @rest[:tel] %></p>
+<%== @rest[:pr][:pr_long].presence %>
+</div>

@@ -1,0 +1,35 @@
+<div style="text-align: center; margin: 30px;">
+<%= form_tag(list_path, method: :post) do %>
+  <%= select(:query, :range, options_for_select(@range_options)) %>
+  <%= hidden_field(:query, :latitude, {value: nil}) %>
+  <%= hidden_field(:query, :longitude, {value: nil}) %>
+  <%= submit_tag '検索する', { id: 'submit_btn', class: 'btn btn-primary' } %>
+<% end %>
+</div>
+
+<script type="text/javascript">
+  var ready
+  ready = function() {
+    // Geolocation APIに対応している
+    if( navigator.geolocation )
+    {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var data = position.coords
+        var lat  = data.latitude
+        var long = data.longitude
+
+        $("#query_latitude").val(lat)
+        $("#query_longitude").val(long)
+      })
+    }
+
+    // Geolocation APIに対応していない
+    else
+    {
+      // 現在位置を取得できない場合
+      $("#submit_btn").prop("disabled", true)
+    }
+  }
+  $(document).ready(ready);
+  $(document).on('page:load', ready);
+</script>
