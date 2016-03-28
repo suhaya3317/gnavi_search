@@ -15,6 +15,7 @@ class RestaurantController < ApplicationController
       query = params[:query]
       query["offset_page"] = 1
     end
+
     session[:query] = query
     url = build_url(query)
     res = open(url)
